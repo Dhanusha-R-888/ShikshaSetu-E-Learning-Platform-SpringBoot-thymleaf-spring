@@ -14,7 +14,6 @@ import lombok.Setter;
 @Setter
 public class UserDto {
 	@Size(min = 3, max = 30, message = "* Enter proper Name")
-	@Pattern(regexp="^[A-Za-z]$", message="* Name should be start with alphbets only")
 	private String name;
 	@NotEmpty(message = "* It is Required")
 	@Email(message = "* Enter Proper Email")
