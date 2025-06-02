@@ -16,23 +16,20 @@ import jakarta.validation.Valid;
 
 @Controller
 public class GeneralController {
-	
+
 	@Autowired
 	GeneralService generalService;
-	
 
 	@GetMapping("/")
 	public String loadHome() {
 		return "home.html";
 	}
-	
-	
+
 	@GetMapping("/register")
 	public String loadRegister(UserDto userDto, Model model) {
 		return generalService.loadRegister(userDto, model);
 	}
-	
-	
+
 	@PostMapping("/register")
 	public String register(@ModelAttribute @Valid UserDto userDto, BindingResult result, HttpSession session) {
 		return generalService.register(userDto, result, session);
@@ -47,5 +44,25 @@ public class GeneralController {
 	public String submitOtp(@RequestParam int otp, HttpSession session) {
 		return generalService.confirmOtp(otp, session);
 	}
-	
+
+	@GetMapping("/resend-otp")
+	public String resendOtp(HttpSession session) {
+		return generalService.resendOtp(session);
+	}
+
+	@GetMapping("/login")
+	public String loadLogin() {
+		return "login.html";
+	}
+
+	@PostMapping("/login")
+	public String login(@RequestParam String email, @RequestParam String password, HttpSession session) {
+		return generalService.login(email, password, session);
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		return generalService.logout(session);
+	}
+
 }
