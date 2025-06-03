@@ -1,5 +1,7 @@
 package org.dhanusha.Shiksha_Setu.MyService;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 import org.dhanusha.Shiksha_Setu.DTO.AccountType;
@@ -43,6 +45,9 @@ public class GeneralService {
 
 	@Autowired
 	TemplateEngine templateEngine;
+	
+	@Value("${OTP_TIME}")
+	long otpTime;
 
 	@Value("${spring.mail.username}")
 	private String email;
@@ -67,10 +72,10 @@ public class GeneralService {
 
 		if (!result.hasErrors()) {
 			int otp = new Random().nextInt(100000, 1000000);
-			session.setMaxInactiveInterval(30);
 			session.setAttribute("otp", otp);
 			session.setAttribute("userDto", userDto);
 			sendEmail(otp, userDto);
+			session.setAttribute("time", LocalDateTime.now());
 			session.setAttribute("pass", "Otp Sent Successfully");
 			return "redirect:/otp";
 		}
@@ -78,10 +83,14 @@ public class GeneralService {
 	}
 
 	public String confirmOtp(int otp, HttpSession session) {
+		LocalDateTime createdTime = (LocalDateTime) session.getAttribute("time");
+		LocalDateTime curretTime = LocalDateTime.now();
 
-		try {
+		long seconds = Duration.between(createdTime, curretTime).getSeconds();
+		if (seconds <= otpTime) {
 			int sessionOtp = (int) session.getAttribute("otp");
 			UserDto userDto = (UserDto) session.getAttribute("userDto");
+
 			if (sessionOtp == otp) {
 				if (userDto.getType() == AccountType.TUTOR) {
 					Tutor tutor = new Tutor();
@@ -106,11 +115,13 @@ public class GeneralService {
 				session.setAttribute("fail", "Invalid Otp Try Again");
 				return "redirect:/otp";
 			}
-		} catch (NullPointerException e) {
-			session.setAttribute("fail", "Otp Expired, Try Again");
-			return "redirect:/register";
+		} else {
+			//session.setAttribute("fail", "Otp Expired ,Plz Try Again By Resending OTP ");
+			session.setAttribute("fail", "Otp Expired after " + seconds + " seconds. Please try again by resending OTP.");
+			return "redirect:/otp";
 		}
-	}
+		}
+
 
 	void sendEmail(int otp, UserDto userDto) {
 
@@ -151,7 +162,7 @@ public class GeneralService {
 	public String resendOtp(HttpSession session) {
 		UserDto userDto = (UserDto) session.getAttribute("userDto");
 		int otp = new Random().nextInt(100000, 1000000);
-		session.setMaxInactiveInterval(60);
+		session.setMaxInactiveInterval(30);
 		session.setAttribute("otp", otp);
 		session.setAttribute("userDto", userDto);
 		sendEmail(otp, userDto);
