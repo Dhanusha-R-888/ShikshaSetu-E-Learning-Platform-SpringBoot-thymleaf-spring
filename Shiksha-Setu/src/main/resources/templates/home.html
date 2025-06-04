@@ -1,22 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Home</title>
+<title>Home - Shiksha_Setu</title>
+<style>
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #f4f6f9;
+	color: #333;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 500px;
+	margin: 100px auto;
+	background: #fff;
+	padding: 40px 30px;
+	border-radius: 12px;
+	text-align: center;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+	color: #007bff;
+	margin-bottom: 30px;
+}
+
+h3 {
+	margin: 10px 0;
+}
+
+.success {
+	color: green;
+}
+
+.error {
+	color: red;
+}
+
+button {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 12px 24px;
+	margin: 10px;
+	font-size: 16px;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+button:hover {
+	background-color: #0056b3;
+}
+
+a {
+	text-decoration: none;
+}
+
+.subtitle {
+	font-size: 1.1rem;
+	color: #555;
+	margin-top: -10px;
+	margin-bottom: 30px;
+	font-weight: 500;
+	letter-spacing: 0.05em;
+	font-style: italic;
+}
+</style>
 </head>
 <body>
 
-<div align="center">
-	<h1>Shiksha_Setu - Elearning Platform</h1>
-	
+	<div class="container">
+		<h1>Shiksha_Setu </h1>
+		<p class="subtitle">Building Bridges to Brighter Learning</p>
 
-	<h3 style="color:green" th:text="${session.pass}"></h3>
-	<h3 style="color:red" th:text="${session.fail}"></h3>
-	<span th:text="${@generalService.removeMessage()}"></span>
-	
-	<a href="/login"> <button>Login</button></a>
-	<a href="/register"><button>Register</button></a>
-	
-
+		<h3 class="success" th:text="${session.pass}"></h3>
+		<h3 class="error" th:text="${session.fail}"></h3>
+		<span th:text="${@generalService.removeMessage()}"></span> <a
+			href="/login"><button>Login</button></a> <a href="/register"><button>Register</button></a>
 	</div>
-	</body>
+
+</body>
+</html>

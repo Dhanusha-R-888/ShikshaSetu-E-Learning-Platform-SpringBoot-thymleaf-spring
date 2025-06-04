@@ -1,22 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Login</title>
+	<meta charset="UTF-8">
+	<title>Login</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}
+		.container {
+			background-color: white;
+			padding: 40px;
+			border-radius: 10px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			width: 300px;
+			text-align: center;
+		}
+		h1 {
+			margin-bottom: 20px;
+			color: #333;
+		}
+		.message {
+			margin-bottom: 15px;
+			font-size: 14px;
+		}
+		.success {
+			color: green;
+		}
+		.error {
+			color: red;
+		}
+		form input[type="email"],
+		form input[type="password"] {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+		form button {
+			width: 100%;
+			padding: 10px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+		form button:hover {
+			background-color: #45a049;
+		}
+	</style>
 </head>
 <body>
-	<div align="center">
+	<div class="container">
 		<h1>Login</h1>
-		<h3 style="color: green" th:text="${session.pass}"></h3>
-		<h3 style="color: red" th:text="${session.fail}"></h3>
-		<span th:text="${@generalService.removeMessage()}"></span>
+		<div class="message success" th:text="${session.pass}"></div>
+		<div class="message error" th:text="${session.fail}"></div>
+		<div th:text="${@generalService.removeMessage()}"></div>
 
 		<form action="/login" method="post">
-			Email : <input type="email" name="email"> Password: <input
-				type="password" name="password">
-			<button>Login</button>
+			<input type="email" name="email" placeholder="Enter your email" required>
+			<input type="password" name="password" placeholder="Enter your password" required>
+			<button type="submit">Login</button>
 		</form>
-
 	</div>
 </body>
 </html>

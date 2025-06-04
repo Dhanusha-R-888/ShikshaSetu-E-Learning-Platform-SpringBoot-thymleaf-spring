@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Add Course</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f8;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: #fff;
+            width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007b5e;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .success-msg {
+            color: green;
+        }
+
+        .error-msg-global {
+            color: red;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"], textarea {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        input[type="radio"] {
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        .radio-group {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: bold;
+        }
+
+        .error-msg {
+            color: red;
+            font-size: 12px;
+            margin-top: 3px;
+            margin-left: 2px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .back-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <h3 class="success-msg" th:text="${session.pass}"></h3>
+        <h3 class="error-msg-global" th:text="${session.fail}"></h3>
+        <span th:text="${@generalService.removeMessage()}"></span>
+
+        <h1>Add Course</h1>
+
+        <form action="/tutor/add-course" method="post" th:object="${courseDto}">
+            <label for="title">Title:</label>
+            <input type="text" id="title" th:field="*{title}" />
+            <span class="error-msg" th:errors="*{title}"></span>
+
+            <label for="description">Description:</label>
+            <textarea id="description" rows="5" th:field="*{description}"></textarea>
+            <span class="error-msg" th:errors="*{description}"></span>
+
+            <div class="radio-group">
+                <label>Type:</label>
+                <label><input type="radio" th:field="*{paid}" value="true" /> Paid</label>
+                <label><input type="radio" th:field="*{paid}" value="false" /> Free</label>
+            </div>
+
+            <button type="submit">Add</button>
+        </form>
+
+        <div class="back-button">
+            <a href="/tutor/courses" class="btn-back">Back</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

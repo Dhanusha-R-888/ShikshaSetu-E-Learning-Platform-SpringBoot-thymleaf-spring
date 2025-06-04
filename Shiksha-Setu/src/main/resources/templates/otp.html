@@ -1,24 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Otp</title>
+	<meta charset="UTF-8">
+	<title>OTP Verification</title>
+	<style>
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background-color: #f2f5f9;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}
+		.container {
+			background-color: #ffffff;
+			padding: 35px;
+			border-radius: 10px;
+			box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+			text-align: center;
+			width: 300px;
+		}
+		h2 {
+			margin-bottom: 20px;
+			color: #333;
+		}
+		.message {
+			font-size: 14px;
+			margin-bottom: 15px;
+		}
+		.success {
+			color: green;
+		}
+		.error {
+			color: red;
+		}
+		input[type="number"] {
+			width: 100%;
+			padding: 10px;
+			margin: 10px 0;
+			border: 1px solid #ccc;
+			border-radius: 6px;
+			font-size: 16px;
+		}
+		button {
+			width: 100%;
+			padding: 10px;
+			font-size: 16px;
+			margin-top: 10px;
+			border: none;
+			border-radius: 6px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+		.btn-submit {
+			background-color: #4CAF50;
+			color: white;
+		}
+		.btn-submit:hover {
+			background-color: #45a049;
+		}
+		.btn-resend {
+			background-color: #2196F3;
+			color: white;
+		}
+		.btn-resend:hover {
+			background-color: #1976d2;
+		}
+	</style>
 </head>
 <body>
-	<div align="center">
-		<h3 style="color: green" th:text="${session.pass}"></h3>
-		<h3 style="color: red" th:text="${session.fail}"></h3>
-		<span th:text="${@generalService.removeMessage()}"></span>
+	<div class="container">
+		<h2>OTP Verification</h2>
+
+		<div class="message success" th:text="${session.pass}"></div>
+		<div class="message error" th:text="${session.fail}"></div>
+		<div th:text="${@generalService.removeMessage()}"></div>
 
 		<form action="/submit-otp" method="post">
-			Enter OTP: <input type="number" name="otp">
-			<button>Submit</button>
+			<input type="number" name="otp" placeholder="Enter OTP" required>
+			<button type="submit" class="btn-submit">Submit</button>
 		</form>
-		<br><br>
 
-		<a href="/resend-otp">
-			<button>Resend OTP</button>
-		</a>
+		<form action="/resend-otp" method="get">
+			<button type="submit" class="btn-resend">Resend OTP</button>
+		</form>
 	</div>
 </body>
 </html>

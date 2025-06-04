@@ -1,22 +1,97 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Tutor-Home</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tutor Home</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f7f8;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+  }
+
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+  }
+
+  .message {
+    max-width: 600px;
+    margin: 0 auto 20px;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+  .message.success {
+    background-color: #e6f4ea;
+    color: #2d7a2d;
+    border: 1px solid #2d7a2d;
+  }
+  .message.fail {
+    background-color: #fdecea;
+    color: #c0392b;
+    border: 1px solid #c0392b;
+  }
+
+  .btn-container {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  a button {
+    background-color: #3498db;
+    border: none;
+    color: white;
+    padding: 14px 28px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  a button:hover {
+    background-color: #2980b9;
+  }
+
+  .logout-btn {
+    background-color: #e74c3c;
+    margin-top: 30px;
+    display: block;
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .logout-btn:hover {
+    background-color: #c0392b;
+  }
+</style>
 </head>
 <body>
-	<h3 style="color: green" th:text="${session.pass}"></h3>
-	<h3 style="color: red" th:text="${session.fail}"></h3>
-	<span th:text="${@generalService.removeMessage()}"></span>
 
-	<h1>Tutor Home</h1>
+  <!-- Messages -->
+  <h3 class="message success" th:if="${session.pass}" th:text="${session.pass}"></h3>
+  <h3 class="message fail" th:if="${session.fail}" th:text="${session.fail}"></h3>
+  <span style="display:none" th:text="${@generalService.removeMessage()}"></span>
 
-	<a href="/tutor/courses"><button>Manage Courses</button></a>
-	<a href="/tutor/sections"><button>Manage Sections</button></a>
-	<a href="/tutor/questions"><button>Manage questions</button></a>
-	<a href="/tutor/learners"><button>View Learners</button></a>
+  <h1>Tutor Home</h1>
 
-	<a href="/logout">
-		<button>Logout</button>
-	</a>
+  <div class="btn-container">
+    <a href="/tutor/courses"><button>Manage Courses</button></a>
+    <a href="/tutor/sections"><button>Manage Sections</button></a>
+    <a href="/tutor/questions"><button>Manage Questions</button></a>
+    <a href="/tutor/learners"><button>View Learners</button></a>
+  </div>
+
+  <a href="/logout"><button class="logout-btn">Logout</button></a>
+
 </body>
 </html>

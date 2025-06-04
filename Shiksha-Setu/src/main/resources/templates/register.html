@@ -1,48 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Register</title>
-<style>
-.error {
-	color: red;
-	font-size: 0.9em;
-}
-</style>
-
+	<meta charset="UTF-8">
+	<title>Register</title>
+	<style>
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background-color: #f3f6fa;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}
+		.container {
+			background-color: #fff;
+			padding: 40px;
+			border-radius: 10px;
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			width: 360px;
+		}
+		h1 {
+			text-align: center;
+			margin-bottom: 25px;
+			color: #333;
+		}
+		.message {
+			text-align: center;
+			font-size: 14px;
+			margin-bottom: 15px;
+		}
+		.success {
+			color: green;
+		}
+		.error-msg {
+			color: red;
+		}
+		form {
+			display: flex;
+			flex-direction: column;
+		}
+		input[type="text"],
+		input[type="email"],
+		input[type="password"] {
+			padding: 10px;
+			margin-bottom: 5px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			font-size: 15px;
+		}
+		.radio-group {
+			margin: 10px 0;
+		}
+		.radio-group label {
+			margin-right: 15px;
+			font-size: 15px;
+		}
+		.error {
+			color: red;
+			font-size: 0.85em;
+			margin-bottom: 10px;
+			text-align: left;
+		}
+		button {
+			margin-top: 15px;
+			padding: 10px;
+			font-size: 16px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+		button:hover {
+			background-color: #45a049;
+		}
+	</style>
 </head>
 <body>
-	<div align="center">
+	<div class="container">
 		<h1>Account Registration</h1>
 
-
-		<h3 style="color: green" th:text="${session.pass}"></h3>
-		<h3 style="color: red" th:text="${session.fail}"></h3>
-		<span th:text="${@generalService.removeMessage()}"></span>
+		<div class="message success" th:text="${session.pass}"></div>
+		<div class="message error-msg" th:text="${session.fail}"></div>
+		<div th:text="${@generalService.removeMessage()}"></div>
 
 		<form action="/register" method="post" th:object="${userDto}">
+			<input type="text" th:field="*{name}" placeholder="Enter Name" />
+			<span th:errors="*{name}" class="error"></span>
 
-			<input type="text" th:field="*{name}" placeholder="Enter Name">
-			<span th:errors="*{name}" class="error"></span> <br> <br>
-			 
-			<input type="text" th:field="*{email}" placeholder="Enter Email"> 
-			<span th:errors="*{email}" class="error"></span> <br> <br> 
-		
-			<input type="text" th:field="*{mobile}" placeholder="Enter Mobile"> 
-			<span	th:errors="*{mobile}" class="error"></span> <br> <br> 
-			
-			<input type="text"	th:field="*{password}" placeholder="Enter Password"> 
-			<span	th:errors="*{password}" class="error"></span> <br> <br> 
-			
-			<input type="text" th:field="*{confirmPassword}" placeholder="Enter Confirm Password">
-			<span th:errors="*{confirmPassword}" class="error"></span> <br> <br> 
-			
-			<input type="radio" th:field="*{type}" value="TUTOR">Tutor 
-			<input	type="radio" th:field="*{type}" value="LEARNER">Learner 
-			<span th:errors="*{type}" class="error"></span> <br> <br>
+			<input type="text" th:field="*{email}" placeholder="Enter Email" />
+			<span th:errors="*{email}" class="error"></span>
 
-			<button>Register</button></form>
+			<input type="text" th:field="*{mobile}" placeholder="Enter Mobile" />
+			<span th:errors="*{mobile}" class="error"></span>
+
+			<input type="text" th:field="*{password}" placeholder="Enter Password" />
+			<span th:errors="*{password}" class="error"></span>
+
+			<input type="text" th:field="*{confirmPassword}" placeholder="Confirm Password" />
+			<span th:errors="*{confirmPassword}" class="error"></span>
+
+			<div class="radio-group">
+				<label><input type="radio" th:field="*{type}" value="TUTOR" /> Tutor</label>
+				<label><input type="radio" th:field="*{type}" value="LEARNER" /> Learner</label>
+			</div>
+			<span th:errors="*{type}" class="error"></span>
+
+			<button type="submit">Register</button>
+		</form>
 	</div>
-
 </body>
 </html>

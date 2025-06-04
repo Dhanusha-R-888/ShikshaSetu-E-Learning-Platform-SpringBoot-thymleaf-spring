@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>View Courses</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 30px;
+    color: #2c3e50;
+  }
+
+  div[align="center"] {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  h1 {
+    margin-bottom: 25px;
+    font-weight: 700;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 14px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+  }
+
+  th {
+    background-color: #3498db;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  tbody tr:hover {
+    background-color: #f1f9ff;
+  }
+
+  td:nth-child(3) {
+    font-weight: 600;
+    color: #34495e;
+  }
+
+  .badge-paid {
+    background-color: #27ae60;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: white;
+    display: inline-block;
+  }
+
+  .badge-free {
+    background-color: #95a5a6;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: black;
+    display: inline-block;
+  }
+
+  button {
+    background-color: #2980b9;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #1c5980;
+  }
+
+  a button {
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+  <div align="center">
+    <h1>View Courses</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="course : ${courses}">
+          <td th:text="${course.title}"></td>
+          <td th:text="${course.description}"></td>
+          <td>
+            <span th:classappend="${course.paid} ? 'badge-paid' : 'badge-free'"
+                  th:text="${course.paid} ? 'Paid' : 'Free'"></span>
+          </td>
+          <td>
+            <button>Publish</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <a href="/tutor/courses">
+      <button>Back</button>
+    </a>
+  </div>
+</body>
+</html>

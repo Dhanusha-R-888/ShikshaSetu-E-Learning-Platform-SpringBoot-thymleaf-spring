@@ -1,19 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title></title>
+    <meta charset="UTF-8">
+    <title>OTP Verification</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: #fff;
+            width: 400px;
+            margin: 60px auto;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        h4 {
+            font-weight: normal;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #28a745;
+            font-size: 36px;
+            letter-spacing: 4px;
+            margin-top: 0;
+        }
+    </style>
 </head>
 <body>
-	<div align="center">
-		<h2>
-			Hello <span th:text="${name}"></span>
-		</h2>
-		<h3>
-			You are trying to create account as <span th:text="${role}"></span>
-		</h3>
-		<h4>Your OTP is</h4>
-		<h1 th:text="${otp}"></h1>
-	</div>
+    <div class="container">
+        <h2>Hello <span th:text="${name}">User</span></h2>
+        <h3>You are trying to create account as <span th:text="${role}">Role</span></h3>
+        <h4>Your OTP is</h4>
+        <h1 th:text="${otp}">123456</h1>
+    </div>
 </body>
 </html>

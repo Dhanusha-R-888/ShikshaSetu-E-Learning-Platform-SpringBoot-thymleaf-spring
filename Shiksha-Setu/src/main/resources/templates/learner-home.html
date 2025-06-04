@@ -1,18 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Learner-Home</title>
+    <meta charset="UTF-8">
+    <title>Learner - Home</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 100px auto;
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            margin: 10px 0;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+
+        button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin-top: 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #c82333;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
-	<h3 style="color: green" th:text="${session.pass}"></h3>
-	<h3 style="color: red" th:text="${session.fail}"></h3>
-	<span th:text="${@generalService.removeMessage()}"></span>
-	<h1>Learner Home</h1>
+    <div class="container">
+        <h3 class="success" th:text="${session.pass}"></h3>
+        <h3 class="error" th:text="${session.fail}"></h3>
+        <span th:text="${@generalService.removeMessage()}"></span>
 
-	<a href="/logout">
-		<button>Logout</button>
-	</a>
+        <h1>Learner Home</h1>
+
+        <a href="/logout">
+            <button>Logout</button>
+        </a>
+    </div>
+
 </body>
 </html>
