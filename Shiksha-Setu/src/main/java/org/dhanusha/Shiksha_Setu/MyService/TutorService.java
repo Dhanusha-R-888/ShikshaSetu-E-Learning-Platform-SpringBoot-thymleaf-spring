@@ -3,13 +3,17 @@ package org.dhanusha.Shiksha_Setu.MyService;
 import java.util.List;
 
 import org.dhanusha.Shiksha_Setu.DTO.CourseDto;
+import org.dhanusha.Shiksha_Setu.DTO.SectionDto;
 import org.dhanusha.Shiksha_Setu.Model.Course;
+import org.dhanusha.Shiksha_Setu.Model.Section;
 import org.dhanusha.Shiksha_Setu.Model.Tutor;
 import org.dhanusha.Shiksha_Setu.MyRepository.CourseRepository;
+import org.dhanusha.Shiksha_Setu.MyRepository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -19,6 +23,9 @@ public class TutorService {
 	
 	@Autowired
 	CourseRepository courseRepository;
+	
+	@Autowired
+	SectionRepository sectionRepository;
 	
 	public String loadHome(HttpSession session) {
 		if (session.getAttribute("tutor") != null) {
@@ -110,6 +117,73 @@ public class TutorService {
 			session.setAttribute("fail", "Invalid Session, Login First");
 			return "redirect:/login";
 		}
+	}
+	
+	public String publishCourse(Long id, HttpSession session) {
+		if (session.getAttribute("tutor") != null) {
+			Course course = courseRepository.findById(id).orElseThrow();
+
+			List<Section> sections = sectionRepository.findByCourse(course);
+
+			if (course.getQuizQuestions().isEmpty() || sections.isEmpty()) {
+				session.setAttribute("fail", "There Should be atleast one section and Quiz To Publish");
+				return "redirect:/tutor/view-courses";
+			} else {
+				course.setPublished(true);
+				session.setAttribute("success", "Course Published Success");
+				return "redirect:/tutor/courses";
+			}
+		} else {
+			session.setAttribute("fail", "Invalid Session, Login First");
+			return "redirect:/login";
+		}
+	}
+
+	public String loadAddSection(HttpSession session, Model model, SectionDto sectionDto) {
+		if (session.getAttribute("tutor") != null) {
+
+			List<Course> courses = courseRepository.findByTutor((Tutor) session.getAttribute("tutor"));
+			if (courses.isEmpty()) {
+				session.setAttribute("fail", "First Add Course to add Section");
+				return "redirect:/tutor/courses";
+			} else {
+				model.addAttribute("courses", courses);
+				model.addAttribute("sectionDto", sectionDto);
+				return "add-section.html";
+			}
+		} else {
+			session.setAttribute("fail", "Invalid Session, Login First");
+			return "redirect:/login";
+		}
+	}
+
+	public String addSection(@Valid SectionDto sectionDto, BindingResult result, HttpSession session) {
+		if (session.getAttribute("tutor") != null) {
+			if (result.hasErrors())
+				return "add-section.html";
+			else {
+				Course course = courseRepository.findById(sectionDto.getCourseId()).orElseThrow();
+				Section section = new Section();
+				section.setCourse(course);
+				section.setTitle(sectionDto.getTitle());
+				section.setNotesUrl(saveNotes(sectionDto.getNotes()));
+				section.setVideoUrl(saveVideo(sectionDto.getVideo()));
+				sectionRepository.save(section);
+				session.setAttribute("pass", "Section Added Success");
+				return "redirect:/tutor/sections";
+			}
+		} else {
+			session.setAttribute("fail", "Invalid Session, Login First");
+			return "redirect:/login";
+		}
+	}
+
+	String saveVideo(MultipartFile multipartFile) {
+		return "";
+	}
+
+	String saveNotes(MultipartFile multipartFile) {
+		return "";
 	}
 
 }

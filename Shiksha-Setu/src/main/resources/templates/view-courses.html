@@ -114,9 +114,10 @@
             <span th:classappend="${course.paid} ? 'badge-paid' : 'badge-free'"
                   th:text="${course.paid} ? 'Paid' : 'Free'"></span>
           </td>
-          <td>
-            <button>Publish</button>
-          </td>
+          <td th:if="${!course.published}">
+				<a	th:href="'/tutor/publish/'+${course.id}"><button
+							class="btn btn-primary">Publish</button></a></td>
+				<td th:if="${course.published}">Published</td>
         </tr>
       </tbody>
     </table>
