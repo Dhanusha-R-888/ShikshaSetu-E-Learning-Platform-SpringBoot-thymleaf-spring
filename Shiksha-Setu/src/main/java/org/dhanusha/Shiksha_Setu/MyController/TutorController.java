@@ -38,10 +38,7 @@ public class TutorController {
 		return tutorService.loadSections(session);
 	}
 
-	@GetMapping("/questions")
-	public String loadQuestions(HttpSession session) {
-		return tutorService.loadQuestions(session);
-	}
+	
 
 	@GetMapping("/learners")
 	public String loadLearners(HttpSession session) {

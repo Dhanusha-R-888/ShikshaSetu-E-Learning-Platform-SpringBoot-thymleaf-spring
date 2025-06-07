@@ -1,13 +1,16 @@
 package org.dhanusha.Shiksha_Setu.MyService;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.dhanusha.Shiksha_Setu.DTO.CourseDto;
 import org.dhanusha.Shiksha_Setu.DTO.SectionDto;
 import org.dhanusha.Shiksha_Setu.Model.Course;
+import org.dhanusha.Shiksha_Setu.Model.QuizQuestion;
 import org.dhanusha.Shiksha_Setu.Model.Section;
 import org.dhanusha.Shiksha_Setu.Model.Tutor;
 import org.dhanusha.Shiksha_Setu.MyRepository.CourseRepository;
@@ -26,16 +29,16 @@ import jakarta.validation.Valid;
 
 @Service
 public class TutorService {
-	
+
 	@Autowired
 	Cloudinary cloudinary;
-	
+
 	@Autowired
 	CourseRepository courseRepository;
-	
+
 	@Autowired
 	SectionRepository sectionRepository;
-	
+
 	public String loadHome(HttpSession session) {
 		if (session.getAttribute("tutor") != null) {
 			return "tutor-home.html";
@@ -80,7 +83,7 @@ public class TutorService {
 			return "redirect:/login";
 		}
 	}
-	
+
 	public String addCourse(HttpSession session, Model model, CourseDto courseDto) {
 		if (session.getAttribute("tutor") != null) {
 			model.addAttribute("courseDto", courseDto);
@@ -90,7 +93,7 @@ public class TutorService {
 			return "redirect:/login";
 		}
 	}
-	
+
 	public String addCourse(HttpSession session, @Valid CourseDto courseDto, BindingResult result) {
 		if (session.getAttribute("tutor") != null) {
 			if (result.hasErrors())
@@ -101,6 +104,10 @@ public class TutorService {
 				course.setPaid(courseDto.isPaid());
 				course.setDescription(courseDto.getDescription());
 				course.setTutor((Tutor) session.getAttribute("tutor"));
+
+				List<QuizQuestion> questions = Arrays.stream(courseDto.getQuestions().split("\\?"))
+						.map(x -> new QuizQuestion(x)).collect(Collectors.toList());
+				course.setQuizQuestions(questions);
 				courseRepository.save(course);
 				session.setAttribute("pass", "Course Added Success");
 				return "redirect:/tutor/courses";
@@ -110,7 +117,7 @@ public class TutorService {
 			return "redirect:/login";
 		}
 	}
-	
+
 	public String viewCourses(HttpSession session, Model model) {
 		if (session.getAttribute("tutor") != null) {
 			List<Course> courses = courseRepository.findByTutor((Tutor) session.getAttribute("tutor"));
@@ -127,7 +134,7 @@ public class TutorService {
 			return "redirect:/login";
 		}
 	}
-	
+
 	public String publishCourse(Long id, HttpSession session) {
 		if (session.getAttribute("tutor") != null) {
 			Course course = courseRepository.findById(id).orElseThrow();
@@ -172,8 +179,7 @@ public class TutorService {
 				List<Course> courses = courseRepository.findByTutor((Tutor) session.getAttribute("tutor"));
 				model.addAttribute("courses", courses);
 				return "add-section.html";
-			}
-			else {
+			} else {
 				Tutor tutor = (Tutor) session.getAttribute("tutor");
 				Course course = courseRepository.findById(sectionDto.getCourseId()).orElseThrow();
 				Section section = new Section();
@@ -181,6 +187,11 @@ public class TutorService {
 				section.setTitle(sectionDto.getTitle());
 				section.setNotesUrl(saveNotes(sectionDto.getNotes(), tutor.getName(), section.getTitle()));
 				section.setVideoUrl(saveVideo(sectionDto.getVideo(), tutor.getName(), section.getTitle()));
+
+				List<QuizQuestion> questions = Arrays.stream(sectionDto.getQuestions().split("\\?"))
+						.map(x -> new QuizQuestion(x)).collect(Collectors.toList());
+				section.setQuizQuestions(questions);
+
 				sectionRepository.save(section);
 				session.setAttribute("pass", "Section Added Success");
 				return "redirect:/tutor/sections";

@@ -77,7 +77,6 @@
 </head>
 <body>
 
-  <!-- Messages -->
   <h3 class="message success" th:if="${session.pass}" th:text="${session.pass}"></h3>
   <h3 class="message fail" th:if="${session.fail}" th:text="${session.fail}"></h3>
   <span style="display:none" th:text="${@generalService.removeMessage()}"></span>
@@ -87,7 +86,6 @@
   <div class="btn-container">
     <a href="/tutor/courses"><button>Manage Courses</button></a>
     <a href="/tutor/sections"><button>Manage Sections</button></a>
-    <a href="/tutor/questions"><button>Manage Questions</button></a>
     <a href="/tutor/learners"><button>View Learners</button></a>
   </div>
 

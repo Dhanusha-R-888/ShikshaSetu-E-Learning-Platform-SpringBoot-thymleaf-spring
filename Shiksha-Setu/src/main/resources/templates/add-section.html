@@ -1,151 +1,157 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Add Section</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<title>Add Section</title>
+<style>
+* {
+	box-sizing: border-box;
+}
 
-        body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: #eef2f5;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
+body {
+	font-family: 'Segoe UI', Roboto, sans-serif;
+	background-color: #eef2f5;
+	margin: 0;
+	padding: 0;
+	color: #333;
+}
 
-        .container {
-            max-width: 600px;
-            margin: 60px auto;
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-        }
+.container {
+	max-width: 600px;
+	margin: 60px auto;
+	background-color: #fff;
+	padding: 40px;
+	border-radius: 12px;
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
 
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #2c3e50;
-            font-size: 26px;
-        }
+h1 {
+	text-align: center;
+	margin-bottom: 30px;
+	color: #2c3e50;
+	font-size: 26px;
+}
 
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: #444;
-        }
+label {
+	display: block;
+	margin-bottom: 6px;
+	font-weight: 600;
+	color: #444;
+}
 
-        input[type="text"],
-        input[type="file"],
-        select {
-            width: 100%;
-            padding: 10px 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 15px;
-            background-color: #fdfdfd;
-            transition: border-color 0.3s ease;
-        }
+input[type="text"], input[type="file"], select {
+	width: 100%;
+	padding: 10px 12px;
+	margin-bottom: 20px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 15px;
+	background-color: #fdfdfd;
+	transition: border-color 0.3s ease;
+}
 
-        input:focus,
-        select:focus {
-            border-color: #4a90e2;
-            outline: none;
-        }
+input:focus, select:focus {
+	border-color: #4a90e2;
+	outline: none;
+}
 
-        span {
-            color: #e74c3c;
-            font-size: 0.85em;
-        }
+span {
+	color: #e74c3c;
+	font-size: 0.85em;
+}
 
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.button-group {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 
-        button {
-            background-color: #4a90e2;
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+button {
+	background-color: #4a90e2;
+	color: white;
+	border: none;
+	padding: 10px 24px;
+	border-radius: 6px;
+	font-size: 15px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
 
-        button:hover {
-            background-color: #3b7dc4;
-        }
+button:hover {
+	background-color: #3b7dc4;
+}
 
-        .btn-back {
-            background-color: #7f8c8d;
-        }
+.btn-back {
+	background-color: #7f8c8d;
+}
 
-        .btn-back:hover {
-            background-color: #636e72;
-        }
+.btn-back:hover {
+	background-color: #636e72;
+}
 
-        @media (max-width: 640px) {
-            .container {
-                margin: 30px 20px;
-                padding: 30px 20px;
-            }
-
-            button {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .button-group {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-    </style>
+@media ( max-width : 640px) {
+	.container {
+		margin: 30px 20px;
+		padding: 30px 20px;
+	}
+	button {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+	.button-group {
+		flex-direction: column;
+		gap: 10px;
+	}
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Add Section</h1>
+	<div class="container">
+		<h1>Add Section</h1>
 
-        <form action="/tutor/add-section" method="post" th:object="${sectionDto}" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" th:field="*{title}" id="title" placeholder="Enter section title">
-                <span th:errors="*{title}"></span>
-            </div>
+		<form action="/tutor/add-section" method="post"
+			th:object="${sectionDto}" enctype="multipart/form-data">
+			<div class="form-group">
+				<label for="title">Title</label> <input type="text"
+					th:field="*{title}" id="title" placeholder="Enter section title">
+				<span th:errors="*{title}"></span>
+			</div>
 
-            <div class="form-group">
-                <label for="video">Upload Video</label>
-                <input type="file" th:field="*{video}" id="video" accept="video/*">
-                <span th:errors="*{video}"></span>
-            </div>
+			<div class="form-group">
+				<label for="video">Upload Video</label> <input type="file"
+					th:field="*{video}" id="video" accept="video/*"> <span
+					th:errors="*{video}"></span>
+			</div>
 
-            <div class="form-group">
-                <label for="notes">Upload Notes (PDF)</label>
-                <input type="file" th:field="*{notes}" id="notes" accept="application/pdf">
-                <span th:errors="*{notes}"></span>
-            </div>
+			<div class="form-group">
+				<label for="notes">Upload Notes (PDF)</label> <input type="file"
+					th:field="*{notes}" id="notes" accept="application/pdf"> <span
+					th:errors="*{notes}"></span>
+			</div>
 
-            <div class="form-group">
-                <label for="courseId">Select Course</label>
-                <select name="courseId" id="courseId">
-                    <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.title}"></option>
-                </select>
-            </div>
+			<div class="form-group">
+				<label for="courseId">Select Course</label> <select name="courseId"
+					id="courseId">
+					<option th:each="course : ${courses}" th:value="${course.id}"
+						th:text="${course.title}"></option>
+				</select>
+			</div>
 
-            <div class="button-group">
-                <button type="submit">Add</button>
-                <a href="/tutor/sections"><button type="button" class="btn-back">Back</button></a>
-            </div>
-        </form>
-    </div>
+			<div class="form-group">
+				<label for="questions">Enter Quiz Questions (If Multiple
+					questions are there use full stop(.) and (?) to separate)</label>
+				<textarea rows="5" cols="30" id="questions" th:field="*{questions}"
+					placeholder="e.g. What is Java? What is Spring Boot?"></textarea>
+				<span th:errors="*{questions}"></span>
+			</div>
+
+
+			<div class="button-group">
+				<button type="submit">Add</button>
+				<a href="/tutor/sections"><button type="button" class="btn-back">Back</button></a>
+			</div>
+		</form>
+	</div>
 </body>
 </html>
