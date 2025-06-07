@@ -91,11 +91,27 @@
   a button {
     margin-top: 20px;
   }
+  .success-message {
+  color: green;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.error-message {
+  color: red;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+  
 </style>
 </head>
 <body>
   <div align="center">
     <h1>View Courses</h1>
+    
+    <div th:if="${session.pass}" th:text="${session.pass}" class="success-message"></div>
+		<div th:if="${session.fail}" th:text="${session.fail}" class="error-message"></div>
+		<th:block th:text="${@generalService.removeMessage()}"></th:block>
 
     <table>
       <thead>
