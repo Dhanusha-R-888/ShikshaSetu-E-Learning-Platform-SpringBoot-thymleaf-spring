@@ -99,9 +99,8 @@
     <div th:if="${session.fail}" th:text="${session.fail}" class="toast error"></div>
     <th:block th:text="${@generalService.removeMessage()}"></th:block>
 
-    <!-- Navigation Buttons -->
-    <a href="/learner/view-courses" class="btn">See Available Courses</a>
-    <a href="#" class="btn">View Enrolled Courses</a>
+   <a href="/learner/view-courses" class="btn">See Available Courses</a> 
+    <a href="/learner/enrolled-courses" class="btn">View Enrolled Courses</a>
     <a href="#" class="btn">View Completed Courses</a>
     <a href="/logout" class="btn logout">Logout</a>
   </div>

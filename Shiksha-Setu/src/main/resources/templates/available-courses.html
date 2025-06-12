@@ -1,44 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Available Courses</title>
+<style>
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #f4f6f9;
+	color: #333;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	max-width: 1000px;
+	margin: 50px auto;
+	background: #fff;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+	text-align: center;
+	color: #0073e6;
+	margin-bottom: 30px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 12px 15px;
+	text-align: left;
+}
+
+th {
+	background-color: #0073e6;
+	color: white;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+button {
+	padding: 8px 16px;
+	background-color: #0073e6;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background 0.3s ease;
+}
+
+button:hover {
+	background-color: #005bb5;
+}
+
+.back-btn {
+	margin-top: 20px;
+	display: inline-block;
+}
+
+.enrolled-text {
+	color: green;
+	font-weight: bold;
+}
+</style>
 </head>
 <body>
-	<div align="center">
+	<div class="container">
 		<h1>Available Courses</h1>
 
-		<table border="1">
-			<tr>
-				<th>Course Title</th>
-				<th>Course Description</th>
-				<th>Total Sections</th>
-				<th>Sections</th>
-				<th>Price</th>
-				<th>Action</th>
-			</tr>
-
-			<tr th:each="course:${courses}">
-				<td th:text="${course.title}"></td>
-				<td th:text="${course.description}"></td>
-				<td th:text="${@sectionRepository.findByCourse(course).size()}"></td>
-				<td><th:block
-						th:each="section:${@sectionRepository.findByCourse(course)}"
-						th:text="${section.title}">
-					</th:block></td>
-				<td th:if="${!course.paid}">Free</td>
-				<td th:if="${course.paid}">199 &#8377</td>
-				<td><a th:href="'/learner/enroll/'+${course.id}">
-						<button>Enroll</button>
-				</a></td>
-			</tr>
-
-
+		<table>
+			<thead>
+				<tr>
+					<th>Course Title</th>
+					<th>Course Description</th>
+					<th>Total Sections</th>
+					<th>Sections</th>
+					<th>Price</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="course : ${courses}">
+					<td th:text="${course.title}">Course Title</td>
+					<td th:text="${course.description}">Course Description</td>
+					<td th:text="${@sectionRepository.findByCourse(course).size()}">0</td>
+					<td>
+						<ul style="margin: 0; padding-left: 18px;">
+							<li
+								th:each="section : ${@sectionRepository.findByCourse(course)}"
+								th:text="${section.title}">Section Title</li>
+						</ul>
+					</td>
+					<td th:text="${course.paid ? '199 ₹' : 'Free'}">Free</td>
+					<td><span th:if="${session.learner.checkCourse(course.id)}"
+						class="enrolled-text">Already Enrolled</span> <a
+						th:if="${!session.learner.checkCourse(course.id)}"
+						th:href="@{'/learner/enroll/' + ${course.id}}">
+							<button>Enroll</button>
+					</a></td>
+				</tr>
+			</tbody>
 		</table>
 
-		<br> <a href="/learner/home">
-			<button>Back</button>
-		</a>
+		<div class="back-btn">
+			<a href="/learner/home"><button>Back</button></a>
+		</div>
 	</div>
 </body>
 </html>

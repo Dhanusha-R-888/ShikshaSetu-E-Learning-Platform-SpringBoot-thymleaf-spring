@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/learner")
 public class LearnerController {
-	
+
 	@Autowired
 	LearnerService learnerService;
 
@@ -21,14 +21,24 @@ public class LearnerController {
 	public String loadHome(HttpSession session) {
 		return learnerService.loadHome(session);
 	}
-	
+
 	@GetMapping("/view-courses")
 	public String loadCourses(HttpSession session, Model model) {
 		return learnerService.viewCourses(session, model);
 	}
 
 	@GetMapping("/enroll/{id}")
-	public String enrollCourse(HttpSession session, @PathVariable Long id,Model model) {
-		return learnerService.enrollCourse(session, id,model);
-}
+	public String enrollCourse(HttpSession session, @PathVariable Long id, Model model) {
+		return learnerService.enrollCourse(session, id, model);
+	}
+	
+	@GetMapping("/enrolled-courses")
+	public String viewEnrolledCourses(HttpSession session, Model model) {
+		return learnerService.viewEnrolledCourses(session, model);
+	}
+
+	@GetMapping("/view-enrolled-sections/{id}")
+	public String viewEnrolledSections(HttpSession session, @PathVariable Long id, Model model) {
+		return learnerService.viewEnrolledSections(session, id, model);
+	}
 }
