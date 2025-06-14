@@ -7,9 +7,11 @@ import org.dhanusha.Shiksha_Setu.Model.Course;
 import org.dhanusha.Shiksha_Setu.Model.EnrolledCourse;
 import org.dhanusha.Shiksha_Setu.Model.EnrolledSection;
 import org.dhanusha.Shiksha_Setu.Model.Learner;
+import org.dhanusha.Shiksha_Setu.Model.QuizQuestion;
 import org.dhanusha.Shiksha_Setu.Model.Section;
 import org.dhanusha.Shiksha_Setu.MyRepository.CourseRepository;
 import org.dhanusha.Shiksha_Setu.MyRepository.EnrolledCourseRepository;
+import org.dhanusha.Shiksha_Setu.MyRepository.EnrolledSectionRepository;
 import org.dhanusha.Shiksha_Setu.MyRepository.LearnerRepository;
 import org.dhanusha.Shiksha_Setu.MyRepository.SectionRepository;
 import org.json.JSONObject;
@@ -26,12 +28,15 @@ import jakarta.servlet.http.HttpSession;
 
 @Service
 public class LearnerService {
-	
+
 	@Autowired
 	CourseRepository courseRepository;
-	
+
 	@Autowired
 	LearnerRepository learnerRepository;
+
+	@Autowired
+	EnrolledSectionRepository enrolledSectionRepository;
 
 	@Autowired
 	SectionRepository sectionRepository;
@@ -101,7 +106,7 @@ public class LearnerService {
 				}
 
 			} else {
-				
+
 				List<Section> sections = sectionRepository.findByCourse(course);
 				List<EnrolledSection> enrolledSections = new ArrayList<EnrolledSection>();
 				for (Section section : sections) {
@@ -157,6 +162,46 @@ public class LearnerService {
 			session.setAttribute("fail", "Invalid Session, Login First");
 			return "redirect:/login";
 
-}
+		}
+	}
+
+	public String viewVideo(HttpSession session, Long id, Model model) {
+		if (session.getAttribute("learner") != null) {
+
+			EnrolledSection section = enrolledSectionRepository.findById(id).get();
+			section.setSectionCompleted(true);
+
+			enrolledSectionRepository.save(section);
+
+			String videoUrl = section.getSection().getVideoUrl();
+			model.addAttribute("link", videoUrl);
+			EnrolledCourse course = enrolledCourseRepository.findByEnrolledSections(section);
+			model.addAttribute("id", course.getId());
+			return "play-video.html";
+		} else {
+			session.setAttribute("fail", "Invalid Session, Login First");
+			return "redirect:/login";
+		}
+	}
+
+	public String loadSectionQuiz(Long id, HttpSession session, Model model) {
+		if (session.getAttribute("learner") != null) {
+
+			EnrolledSection section = enrolledSectionRepository.findById(id).get();
+
+			if (!section.isSectionCompleted()) {
+				EnrolledCourse course = enrolledCourseRepository.findByEnrolledSections(section);
+				session.setAttribute("fail", "First Complete the Section to Take Quiz");
+				return "redirect:/learner/view-enrolled-sections/" + course.getId();
+			}
+			List<QuizQuestion> questions = section.getSection().getQuizQuestions();
+			model.addAttribute("questions", questions);
+			model.addAttribute("id", id);
+
+			return "section-quiz.html";
+		} else {
+			session.setAttribute("fail", "Invalid Session, Login First");
+			return "redirect:/login";
+		}
 	}
 }

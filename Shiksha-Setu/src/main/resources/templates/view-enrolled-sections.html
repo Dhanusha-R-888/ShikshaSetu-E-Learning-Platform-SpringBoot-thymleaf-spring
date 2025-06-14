@@ -1,77 +1,80 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>View Sections</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Poppins', sans-serif;
       background-color: #f4f6f9;
       margin: 0;
       padding: 0;
-      color: #333;
     }
 
     .container {
       max-width: 900px;
       margin: 50px auto;
-      padding: 25px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
-      color: #0073e6;
+      color: #333;
       margin-bottom: 30px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-top: 20px;
     }
 
     th, td {
-      padding: 14px;
-      text-align: left;
-      border: 1px solid #ccc;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: center;
     }
 
     th {
-      background-color: #0073e6;
+      background-color: #4CAF50;
       color: white;
     }
 
-    tr:nth-child(even) {
+    td {
       background-color: #f9f9f9;
     }
 
-    button {
+    a button {
       padding: 8px 16px;
-      background-color: #0073e6;
+      font-size: 14px;
       color: white;
+      background-color: #2196F3;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background-color 0.3s ease;
     }
 
-    button:hover {
-      background-color: #005bb5;
+    a button:hover {
+      background-color: #1976D2;
     }
 
-    .back-button {
-      text-align: center;
+    .back-btn {
       margin-top: 30px;
+      background-color: #777;
     }
 
-    a {
-      text-decoration: none;
+    .back-btn:hover {
+      background-color: #555;
     }
   </style>
 </head>
 <body>
+
   <div class="container">
     <h1>View Sections</h1>
 
@@ -88,17 +91,17 @@
         <tr th:each="enrolledSection : ${enrolledSections}">
           <td th:text="${enrolledSection.section.title}">Section Title</td>
           <td>
-            <a th:href="${enrolledSection.section.videoUrl}" target="_blank">
+            <a th:href="'/learner/view-video/' + ${enrolledSection.id}">
               <button>View</button>
             </a>
           </td>
           <td>
-            <a th:href="${enrolledSection.section.notesUrl}" download>
+            <a th:href="${enrolledSection.section.notesUrl}" target="_blank">
               <button>Download</button>
             </a>
           </td>
           <td>
-            <a th:href="@{'/learner/take-quiz/' + ${enrolledSection.id}}">
+            <a th:href="'/learner/section/quiz/' + ${enrolledSection.id}">
               <button>Take Quiz</button>
             </a>
           </td>
@@ -106,11 +109,10 @@
       </tbody>
     </table>
 
-    <div class="back-button">
-      <a href="/learner/enrolled-courses">
-        <button>Back</button>
-      </a>
-    </div>
+    <a href="/learner/enrolled-courses">
+      <button class="back-btn">Back</button>
+    </a>
   </div>
+
 </body>
 </html>
