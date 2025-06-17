@@ -10,10 +10,14 @@ import java.util.stream.Collectors;
 import org.dhanusha.Shiksha_Setu.DTO.CourseDto;
 import org.dhanusha.Shiksha_Setu.DTO.SectionDto;
 import org.dhanusha.Shiksha_Setu.Model.Course;
+import org.dhanusha.Shiksha_Setu.Model.EnrolledCourse;
+import org.dhanusha.Shiksha_Setu.Model.Learner;
 import org.dhanusha.Shiksha_Setu.Model.QuizQuestion;
 import org.dhanusha.Shiksha_Setu.Model.Section;
 import org.dhanusha.Shiksha_Setu.Model.Tutor;
 import org.dhanusha.Shiksha_Setu.MyRepository.CourseRepository;
+import org.dhanusha.Shiksha_Setu.MyRepository.EnrolledCourseRepository;
+import org.dhanusha.Shiksha_Setu.MyRepository.LearnerRepository;
 import org.dhanusha.Shiksha_Setu.MyRepository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +36,12 @@ public class TutorService {
 
 	@Autowired
 	Cloudinary cloudinary;
+	
+	@Autowired
+	LearnerRepository learnerRepository;
+
+	@Autowired
+	EnrolledCourseRepository enrolledCourseRepository;
 
 	@Autowired
 	CourseRepository courseRepository;
@@ -75,9 +85,15 @@ public class TutorService {
 		}
 	}
 
-	public String loadLearners(HttpSession session) {
+	public String loadLearners(HttpSession session,Model model) {
 		if (session.getAttribute("tutor") != null) {
-			return "tutor-home.html";
+			Tutor tutor = (Tutor) session.getAttribute("tutor");
+			List<Course> courses = courseRepository.findByTutor(tutor);
+			List<EnrolledCourse> enrolledCourses = enrolledCourseRepository.findByCourseIn(courses);
+
+			List<Learner> learners = learnerRepository.findByEnrolledCoursesIn(enrolledCourses);
+			model.addAttribute("learners", learners);
+			return "display-learners.html";
 		} else {
 			session.setAttribute("fail", "Invalid Session, Login First");
 			return "redirect:/login";
