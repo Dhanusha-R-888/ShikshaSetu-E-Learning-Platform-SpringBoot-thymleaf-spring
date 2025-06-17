@@ -1,115 +1,286 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>Register</title>
-	<style>
-		body {
-			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-			background-color: #f3f6fa;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			height: 100vh;
-			margin: 0;
-		}
-		.container {
-			background-color: #fff;
-			padding: 40px;
-			border-radius: 10px;
-			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-			width: 360px;
-		}
-		h1 {
-			text-align: center;
-			margin-bottom: 25px;
-			color: #333;
-		}
-		.message {
-			text-align: center;
-			font-size: 14px;
-			margin-bottom: 15px;
-		}
-		.success {
-			color: green;
-		}
-		.error-msg {
-			color: red;
-		}
-		form {
-			display: flex;
-			flex-direction: column;
-		}
-		input[type="text"],
-		input[type="email"],
-		input[type="password"] {
-			padding: 10px;
-			margin-bottom: 5px;
-			border: 1px solid #ccc;
-			border-radius: 5px;
-			font-size: 15px;
-		}
-		.radio-group {
-			margin: 10px 0;
-		}
-		.radio-group label {
-			margin-right: 15px;
-			font-size: 15px;
-		}
-		.error {
-			color: red;
-			font-size: 0.85em;
-			margin-bottom: 10px;
-			text-align: left;
-		}
-		button {
-			margin-top: 15px;
-			padding: 10px;
-			font-size: 16px;
-			background-color: #4CAF50;
-			color: white;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-			transition: background-color 0.3s;
-		}
-		button:hover {
-			background-color: #45a049;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <title>Register - Shiksha-Setu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="https://yogastudies.org/wp-content/uploads/jnana.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --text-color: #2c3e50;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --bg-light: #f8f9fa;
+            --accent-color: #ff6b6b;
+            --error-color: #f44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--bg-light);
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.2rem 5%;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .register-section {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px var(--shadow-color);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .register-section h1 {
+            font-size: 2.2rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-light);
+        }
+
+        .form-group input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.1);
+            outline: none;
+        }
+
+        .radio-group {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: var(--bg-light);
+        }
+
+        .radio-option:hover {
+            background: rgba(33, 150, 243, 0.1);
+        }
+
+        .radio-option input[type="radio"] {
+            accent-color: var(--primary-color);
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .error {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            color: white;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        .toast.success {
+            background: var(--primary-color);
+        }
+
+        .toast.error {
+            background: var(--error-color);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-	<div class="container">
-		<h1>Account Registration</h1>
+    <nav class="navbar">
+        <a href="/" class="logo">Shiksha-Setu</a>
+    </nav>
 
-		<div class="message success" th:text="${session.pass}"></div>
-		<div class="message error-msg" th:text="${session.fail}"></div>
-		<div th:text="${@generalService.removeMessage()}"></div>
+    <div class="register-section">
+        <h1>Create Account</h1>
+        <form action="/register" method="post" th:object="${userDto}">
+            <div class="form-group">
+                <input type="text" th:field="*{name}" placeholder="Full Name">
+                <span class="error" th:errors="*{name}"></span>
+            </div>
 
-		<form action="/register" method="post" th:object="${userDto}">
-			<input type="text" th:field="*{name}" placeholder="Enter Name" />
-			<span th:errors="*{name}" class="error"></span>
+            <div class="form-group">
+                <input type="email" th:field="*{email}" placeholder="Email Address">
+                <span class="error" th:errors="*{email}"></span>
+            </div>
 
-			<input type="text" th:field="*{email}" placeholder="Enter Email" />
-			<span th:errors="*{email}" class="error"></span>
+            <div class="form-group">
+                <input type="text" th:field="*{mobile}" placeholder="Mobile Number">
+                <span class="error" th:errors="*{mobile}"></span>
+            </div>
 
-			<input type="text" th:field="*{mobile}" placeholder="Enter Mobile" />
-			<span th:errors="*{mobile}" class="error"></span>
+            <div class="form-group">
+                <input type="password" th:field="*{password}" placeholder="Password">
+                <span class="error" th:errors="*{password}"></span>
+            </div>
 
-			<input type="text" th:field="*{password}" placeholder="Enter Password" />
-			<span th:errors="*{password}" class="error"></span>
+            <div class="form-group">
+                <input type="password" th:field="*{confirmPassword}" placeholder="Confirm Password">
+                <span class="error" th:errors="*{confirmPassword}"></span>
+            </div>
 
-			<input type="text" th:field="*{confirmPassword}" placeholder="Confirm Password" />
-			<span th:errors="*{confirmPassword}" class="error"></span>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" th:field="*{type}" value="TUTOR">
+                    <i class="fas fa-chalkboard-teacher"></i> Tutor
+                </label>
+                <label class="radio-option">
+                    <input type="radio" th:field="*{type}" value="LEARNER">
+                    <i class="fas fa-user-graduate"></i> Learner
+                </label>
+            </div>
+            <span class="error" th:errors="*{type}"></span>
 
-			<div class="radio-group">
-				<label><input type="radio" th:field="*{type}" value="TUTOR" /> Tutor</label>
-				<label><input type="radio" th:field="*{type}" value="LEARNER" /> Learner</label>
-			</div>
-			<span th:errors="*{type}" class="error"></span>
+            <button type="submit">Create Account</button>
+        </form>
+    </div>
 
-			<button type="submit">Register</button>
-		</form>
-	</div>
+    <div class="toast-container">
+        <div id="successToast" class="toast success" th:if="${session.pass}" th:text="${session.pass}"></div>
+        <div id="errorToast" class="toast error" th:if="${session.fail}" th:text="${session.fail}"></div>
+    </div>
+
+    <script>
+        function showToast() {
+            const toasts = document.querySelectorAll('.toast');
+            
+            toasts.forEach(toast => {
+                if (toast && toast.textContent.trim() !== '') {
+                    toast.style.display = 'flex';
+                    
+                    const closeBtn = toast.querySelector('.toast-close');
+                    closeBtn.addEventListener('click', () => {
+                        toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                        setTimeout(() => {
+                            toast.remove();
+                        }, 300);
+                    });
+                    
+                    setTimeout(() => {
+                        if (toast.isConnected) {
+                            toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                            setTimeout(() => {
+                                if (toast.isConnected) {
+                                    toast.remove();
+                                }
+                            }, 300);
+                        }
+                    }, 3000);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', showToast);
+    </script>
 </body>
 </html>

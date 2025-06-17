@@ -2,156 +2,231 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Add Section</title>
+<title>Add Section - Shiksha-Setu</title>
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+	rel="stylesheet">
+<link rel="shortcut icon"
+	href="https://yogastudies.org/wp-content/uploads/jnana.jpg"
+	type="image/x-icon">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
+:root {
+	--primary-color: #4CAF50;
+	--secondary-color: #2196F3;
+	--text-color: #2c3e50;
+	--shadow-color: rgba(0, 0, 0, 0.1);
+	--error-color: #f44336;
+	--bg-light: #f5f7fa;
+	--accent-color: #ff5722;
+}
+
 * {
+	margin: 0;
+	padding: 0;
 	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
 }
 
 body {
-	font-family: 'Segoe UI', Roboto, sans-serif;
-	background-color: #eef2f5;
-	margin: 0;
-	padding: 0;
-	color: #333;
+	background: var(--bg-light);
+	min-height: 100vh;
+	padding-top: 100px;
+	display: flex;
+	flex-direction: column;
 }
 
-.container {
-	max-width: 600px;
-	margin: 60px auto;
-	background-color: #fff;
-	padding: 40px;
-	border-radius: 12px;
-	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-	text-align: center;
-	margin-bottom: 30px;
-	color: #2c3e50;
-	font-size: 26px;
-}
-
-label {
-	display: block;
-	margin-bottom: 6px;
-	font-weight: 600;
-	color: #444;
-}
-
-input[type="text"], input[type="file"], select {
+.navbar {
+	position: fixed;
+	top: 0;
 	width: 100%;
-	padding: 10px 12px;
-	margin-bottom: 20px;
-	border: 1px solid #ccc;
-	border-radius: 6px;
-	font-size: 15px;
-	background-color: #fdfdfd;
-	transition: border-color 0.3s ease;
-}
-
-input:focus, select:focus {
-	border-color: #4a90e2;
-	outline: none;
-}
-
-span {
-	color: #e74c3c;
-	font-size: 0.85em;
-}
-
-.button-group {
+	background: rgba(255, 255, 255, 0.95);
+	padding: 1.2rem 5%;
+	backdrop-filter: blur(10px);
+	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+	z-index: 1000;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
-button {
-	background-color: #4a90e2;
-	color: white;
-	border: none;
-	padding: 10px 24px;
-	border-radius: 6px;
-	font-size: 15px;
+.logo {
+	font-size: 2rem;
+	font-weight: 700;
+	background: linear-gradient(45deg, var(--primary-color),
+		var(--secondary-color));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-decoration: none;
+	letter-spacing: 1px;
+}
+
+.nav-btn {
+	padding: 0.8rem 1.5rem;
+	border-radius: 25px;
 	font-weight: 500;
+	text-decoration: none;
+	transition: all 0.3s ease;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.nav-logout {
+	color: white;
+	background: linear-gradient(45deg, var(--error-color),
+		var(--accent-color));
+	box-shadow: 0 4px 15px rgba(255, 107, 107, 0.2);
+}
+
+.container {
+	margin: 2rem auto;
+	padding: 2.5rem;
+	background: white;
+	border-radius: 20px;
+	box-shadow: 0 8px 30px var(--shadow-color);
+	width: 90%;
+	max-width: 800px;
+	animation: slideUp 0.5s ease-out;
+}
+
+h1 {
+	color: var(--text-color);
+	margin-bottom: 2rem;
+	text-align: center;
+	font-size: 2rem;
+}
+
+.form-group {
+	margin-bottom: 1.5rem;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 0.5rem;
+	color: var(--text-color);
+	font-weight: 500;
+}
+
+.form-control {
+	width: 100%;
+	padding: 0.8rem;
+	border: 2px solid #e0e0e0;
+	border-radius: 8px;
+	font-size: 1rem;
+	transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+	outline: none;
+	border-color: var(--primary-color);
+}
+
+.error {
+	color: var(--error-color);
+	font-size: 0.875rem;
+	margin-top: 0.25rem;
+}
+
+.btn {
+	padding: 0.8rem 1.5rem;
+	border: none;
+	border-radius: 8px;
+	font-size: 1rem;
 	cursor: pointer;
-	transition: background-color 0.3s ease;
+	transition: all 0.3s ease;
+	font-weight: 500;
+	color: white;
+	background: linear-gradient(45deg, var(--primary-color),
+		var(--secondary-color));
 }
 
-button:hover {
-	background-color: #3b7dc4;
+.btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.btn-back {
-	background-color: #7f8c8d;
+.btn-secondary {
+	background: var(--secondary-color);
 }
 
-.btn-back:hover {
-	background-color: #636e72;
+.footer {
+	background: linear-gradient(to right, var(--text-color), #1a2634);
+	color: white;
+	text-align: center;
+	padding: 2.5rem;
+	margin-top: auto;
 }
 
-@media ( max-width : 640px) {
-	.container {
-		margin: 30px 20px;
-		padding: 30px 20px;
-	}
-	button {
-		width: 100%;
-		margin-bottom: 10px;
-	}
-	.button-group {
-		flex-direction: column;
-		gap: 10px;
-	}
+@
+keyframes slideUp {from { opacity:0;
+	transform: translateY(20px);
+}
+
+to {
+	opacity: 1;
+	transform: translateY(0);
+}
 }
 </style>
 </head>
 <body>
+	<nav class="navbar">
+		<a href="/tutor/home" class="logo">Shiksha-Setu</a>
+		<div class="nav-links">
+			<a href="/logout" class="nav-btn nav-logout"> <i
+				class="fas fa-sign-out-alt"></i> Logout
+			</a>
+		</div>
+	</nav>
+
 	<div class="container">
 		<h1>Add Section</h1>
 
 		<form action="/tutor/add-section" method="post"
 			th:object="${sectionDto}" enctype="multipart/form-data">
 			<div class="form-group">
-				<label for="title">Title</label> <input type="text"
-					th:field="*{title}" id="title" placeholder="Enter section title">
-				<span th:errors="*{title}"></span>
+				<label>Title</label> <input type="text" th:field="*{title}"
+					class="form-control"> <span th:errors="*{title}"
+					class="error"></span>
 			</div>
 
 			<div class="form-group">
-				<label for="video">Upload Video</label> <input type="file"
-					th:field="*{video}" id="video" accept="video/*"> <span
-					th:errors="*{video}"></span>
+				<label>Upload Video</label> <input type="file" th:field="*{video}"
+					accept="video/*" class="form-control"> <span
+					th:errors="*{video}" class="error"></span>
 			</div>
 
 			<div class="form-group">
-				<label for="notes">Upload Notes (PDF)</label> <input type="file"
-					th:field="*{notes}" id="notes" accept="application/pdf"> <span
-					th:errors="*{notes}"></span>
+				<label>Upload Notes</label> <input type="file" th:field="*{notes}"
+					accept="application/pdf" class="form-control"> <span
+					th:errors="*{notes}" class="error"></span>
 			</div>
 
 			<div class="form-group">
-				<label for="courseId">Select Course</label> <select name="courseId"
-					id="courseId">
-					<option th:each="course : ${courses}" th:value="${course.id}"
-						th:text="${course.title}"></option>
+				<label>Select Course</label> <select name="courseId"
+					class="form-control">
+					<option th:each="course:${courses}" th:value="${course.id}">
+						<th:block th:text="${course.title}"></th:block>
+					</option>
 				</select>
 			</div>
 
 			<div class="form-group">
-				<label for="questions">Enter Quiz Questions (If Multiple
-					questions are there use full stop(.) and (?) to separate)</label>
-				<textarea rows="5" cols="30" id="questions" th:field="*{questions}"
-					placeholder="e.g. What is Java? What is Spring Boot?"></textarea>
-				<span th:errors="*{questions}"></span>
+				<label>Enter Quiz Questions (Separate multiple questions
+					with full stop)</label>
+				<textarea rows="5" th:field="*{questions}" class="form-control"></textarea>
+				<span th:errors="*{questions}" class="error"></span>
 			</div>
 
-
-			<div class="button-group">
-				<button type="submit">Add</button>
-				<a href="/tutor/sections"><button type="button" class="btn-back">Back</button></a>
-			</div>
+			<button type="submit" class="btn">Add Section</button>
+			<a href="/tutor/sections" class="btn btn-secondary">Back</a>
 		</form>
 	</div>
+
+	<footer class="footer">
+		<p>&copy; 2025 . Shiksha-Setu rights reserved.</p>
+	</footer>
 </body>
 </html>

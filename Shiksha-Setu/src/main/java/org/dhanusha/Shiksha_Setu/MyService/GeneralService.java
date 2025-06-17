@@ -85,42 +85,47 @@ public class GeneralService {
 	public String confirmOtp(int otp, HttpSession session) {
 		LocalDateTime createdTime = (LocalDateTime) session.getAttribute("time");
 		LocalDateTime curretTime = LocalDateTime.now();
+		if (createdTime != null) {
+			long seconds = Duration.between(createdTime, curretTime).getSeconds();
+			if (seconds <= otpTime) {
+				int sessionOtp = (int) session.getAttribute("otp");
+				UserDto userDto = (UserDto) session.getAttribute("userDto");
 
-		long seconds = Duration.between(createdTime, curretTime).getSeconds();
-		if (seconds <= otpTime) {
-			int sessionOtp = (int) session.getAttribute("otp");
-			UserDto userDto = (UserDto) session.getAttribute("userDto");
+				if (sessionOtp == otp) {
+					if (userDto.getType() == AccountType.TUTOR) {
+						Tutor tutor = new Tutor();
+						tutor.setEmail(userDto.getEmail());
+						tutor.setMobile(userDto.getMobile());
+						tutor.setName(userDto.getName());
+						tutor.setPassword(encoder.encode(userDto.getPassword()));
 
-			if (sessionOtp == otp) {
-				if (userDto.getType() == AccountType.TUTOR) {
-					Tutor tutor = new Tutor();
-					tutor.setEmail(userDto.getEmail());
-					tutor.setMobile(userDto.getMobile());
-					tutor.setName(userDto.getName());
-					tutor.setPassword(encoder.encode(userDto.getPassword()));
+						tutorRepository.save(tutor);
+					} else {
+						Learner learner = new Learner();
+						learner.setEmail(userDto.getEmail());
+						learner.setMobile(userDto.getMobile());
+						learner.setName(userDto.getName());
+						learner.setPassword(encoder.encode(userDto.getPassword()));
 
-					tutorRepository.save(tutor);
+						learnerRepository.save(learner);
+					}
+					session.setAttribute("pass", "Account Created Success");
+					return "redirect:/";
 				} else {
-					Learner learner = new Learner();
-					learner.setEmail(userDto.getEmail());
-					learner.setMobile(userDto.getMobile());
-					learner.setName(userDto.getName());
-					learner.setPassword(encoder.encode(userDto.getPassword()));
-
-					learnerRepository.save(learner);
+					session.setAttribute("fail", "Invalid Otp Try Again");
+					return "redirect:/otp";
 				}
-				session.setAttribute("pass", "Account Created Successfully");
-				return "redirect:/";
+
 			} else {
-				session.setAttribute("fail", "Invalid Otp Try Again");
+				session.setAttribute("fail", "Otp Expired at Try Resending OTP ");
 				return "redirect:/otp";
 			}
 		} else {
-			//session.setAttribute("fail", "Otp Expired ,Plz Try Again By Resending OTP ");
-			session.setAttribute("fail", "Otp Expired after " + seconds + " seconds. Please try again by resending OTP.");
+			session.setAttribute("fail", "Otp Expired at Try Resending OTP ");
 			return "redirect:/otp";
 		}
-		}
+
+	}
 
 
 	void sendEmail(int otp, UserDto userDto) {
