@@ -1,267 +1,413 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Shiksha-Setu - E-learning Platform</title>
-  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    :root {
-      --primary-color: #4CAF50;
-      --secondary-color: #2196F3;
-      --text-color: #2c3e50;
-      --shadow-color: rgba(0,0,0,0.1);
-      --bg-light: #f4f6f8;
-      --accent-color: #ff5722;
-    }
+<meta charset="UTF-8">
+<title>Shiksha-Setu - E-learning Platform</title>
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+	rel="stylesheet">
+<link rel="shortcut icon"
+	href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp02pR8RmWpKqU7Fd_9pDMm5Hvyz8T1qMDUQ&s"
+	type="image/x-icon">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root {
+	--primary-color: #4CAF50;
+	--secondary-color: #2196F3;
+	--text-color: #2c3e50;
+	--shadow-color: rgba(0, 0, 0, 0.1);
+	--bg-light: #f8f9fa;
+	--accent-color: #ff6b6b;
+}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
 
-    body {
-      background-color: var(--bg-light);
-      color: var(--text-color);
-      min-height: 100vh;
-    }
+body {
+	background: var(--bg-light);
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
 
-    .navbar {
-      background: #fff;
-      box-shadow: 0 2px 12px var(--shadow-color);
-      padding: 18px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+.navbar {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	background: rgba(255, 255, 255, 0.95);
+	padding: 1.2rem 5%;
+	backdrop-filter: blur(10px);
+	box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+	z-index: 1000;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      font-size: 2rem;
-      font-weight: 700;
-      text-decoration: none;
-      letter-spacing: 1px;
-      color: var(--primary-color);
-      background: none;
-      transition: color 0.3s;
-    }
+.logo {
+	font-size: 2rem;
+	font-weight: 700;
+	background: linear-gradient(45deg, var(--primary-color),
+		var(--secondary-color));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-decoration: none;
+	letter-spacing: 1px;
+}
 
-    .logo-icon {
-      font-size: 2.3rem;
-      color: var(--secondary-color);
-      background: #fff;
-      border-radius: 50%;
-      padding: 0.2em 0.3em;
-      box-shadow: 0 2px 8px var(--shadow-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.nav-links {
+	display: flex;
+	gap: 2.5rem;
+	align-items: center;
+}
 
-    .logo-text {
-      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+.nav-btn {
+	padding: 0.8rem 1.5rem;
+	border-radius: 25px;
+	font-weight: 500;
+	text-decoration: none;
+	transition: all 0.3s ease;
+}
 
-    .logo:hover {
-      color: var(--accent-color);
-    }
+.nav-login {
+	color: var(--text-color);
+}
 
-    .nav-links a {
-      margin-left: 15px;
-      text-decoration: none;
-      padding: 8px 18px;
-      border-radius: 5px;
-      color: #fff;
-      font-weight: 500;
-      transition: background 0.3s;
-    }
+.nav-login:hover {
+	color: var(--primary-color);
+}
 
-    .nav-login {
-      background: var(--secondary-color);
-    }
+.nav-register {
+	background: linear-gradient(45deg, var(--primary-color),
+		var(--secondary-color));
+	color: white;
+	box-shadow: 0 4px 15px rgba(33, 150, 243, 0.2);
+}
 
-    .nav-register {
-      background: var(--primary-color);
-    }
+.nav-register:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(33, 150, 243, 0.3);
+}
 
-    .nav-login:hover,
-    .nav-register:hover {
-      opacity: 0.85;
-    }
+/* Hero Section */
+.hero {
+	padding: 10rem 5% 6rem;
+	text-align: center;
+	background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+	position: relative;
+	overflow: hidden;
+}
 
-    .hero {
-      background: linear-gradient(90deg, var(--primary-color) 60%, var(--secondary-color) 100%);
-      color: #fff;
-      text-align: center;
-      padding: 70px 20px 50px 20px;
-    }
+.hero::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background:
+		url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="%234CAF50" fill-opacity="0.05" d="M45,-78.1C58.3,-71.3,68.7,-58.8,76.4,-44.7C84.1,-30.6,89,-14.8,88.1,0.5C87.1,15.8,80.3,31.6,71.2,45.6C62.1,59.6,50.8,71.8,37,78.1C23.1,84.4,6.7,84.8,-8.9,81.5C-24.4,78.2,-39,71.2,-51.8,62C-64.6,52.8,-75.5,41.4,-82.2,27.4C-88.8,13.5,-91.2,-3,-87.6,-18.1C-84,-33.2,-74.4,-46.8,-62.3,-56.6C-50.2,-66.4,-35.6,-72.4,-21.2,-76.7C-6.8,-81,7.4,-83.7,22.1,-82.5C36.8,-81.3,51.9,-76.3,45,-78.1Z" transform="translate(100 100)"/></svg>')
+		no-repeat center center;
+	opacity: 0.1;
+	animation: rotate 60s linear infinite;
+}
 
-    .hero h1 {
-      font-size: 2.7rem;
-      margin-bottom: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
+@keyframes rotate {from { transform:rotate(0deg);
+	
+}
 
-    .hero p {
-      font-size: 1.3rem;
-      font-weight: 400;
-    }
+to {
+	transform: rotate(360deg);
+}
 
-    .features {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 50px 20px;
-      gap: 32px;
-      background-color: #fff;
-    }
+}
 
-    .feature-card {
-      background-color: #f0f8ff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px var(--shadow-color);
-      padding: 28px 22px;
-      text-align: center;
-      width: 270px;
-      transition: transform 0.3s;
-    }
+.features {
+	padding: 5rem 5%;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 2rem;
+	background: white;
+}
 
-    .feature-card:hover {
-      transform: translateY(-7px) scale(1.03);
-    }
+.feature-card {
+	padding: 2.5rem;
+	text-align: center;
+	border-radius: 20px;
+	background: white;
+	box-shadow: 0 5px 20px var(--shadow-color);
+	transition: all 0.3s ease;
+	border: 1px solid rgba(0, 0, 0, 0.05);
+}
 
-    .feature-icon {
-      font-size: 2.5rem;
-      color: var(--secondary-color);
-      margin-bottom: 15px;
-    }
+.feature-card:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+	border-color: var(--primary-color);
+}
 
-    .feature-card h3 {
-      font-size: 1.25rem;
-      margin-bottom: 10px;
-      color: var(--primary-color);
-      font-weight: 600;
-    }
+.feature-icon {
+	font-size: 3rem;
+	background: linear-gradient(45deg, var(--primary-color),
+		var(--secondary-color));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	margin-bottom: 1.5rem;
+}
 
-    .feature-card p {
-      color: #555;
-      font-size: 1rem;
-    }
+.feature-card h3 {
+	color: var(--text-color);
+	margin-bottom: 1rem;
+	font-size: 1.5rem;
+}
 
-    .toast-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
-    }
+.feature-card p {
+	color: #666;
+	line-height: 1.6;
+}
 
-    .toast {
-      display: none;
-      align-items: center;
-      background-color: #fff;
-      border-left: 5px solid;
-      padding: 12px 16px;
-      margin-bottom: 10px;
-      border-radius: 4px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      animation: slideIn 0.3s ease-out forwards;
-    }
+.toast-container {
+	position: fixed;
+	top: 90px;
+	right: 20px;
+	z-index: 1000;
+}
 
-    .toast.success {
-      border-color: var(--primary-color);
-    }
+.toast {
+	padding: 1rem 2rem;
+	border-radius: 12px;
+	color: white;
+	margin-bottom: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	animation: slideIn 0.3s ease-out forwards;
+}
 
-    .toast.error {
-      border-color: var(--accent-color);
-    }
+.toast.success {
+	background: var(--primary-color);
+}
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(100%); }
-      to { opacity: 1; transform: translateX(0); }
-    }
+.toast.error {
+	background: #f44336;
+}
 
-    @media (max-width: 900px) {
-      .features {
-        flex-direction: column;
-        gap: 20px;
-      }
-      .feature-card {
-        width: 100%;
-      }
-    }
+.toast-close {
+	background: none;
+	border: none;
+	color: white;
+	font-size: 1.5rem;
+	cursor: pointer;
+	padding: 0 0.5rem;
+	opacity: 0.7;
+	transition: opacity 0.2s;
+	line-height: 1;
+}
 
-    @media (max-width: 600px) {
-      .navbar {
-        flex-direction: column;
-        gap: 10px;
-        padding: 12px 10px;
-      }
-      .logo {
-        font-size: 1.3rem;
-      }
-      .logo-icon {
-        font-size: 1.5rem;
-      }
-      .hero h1 {
-        font-size: 1.7rem;
-      }
-      .features {
-        padding: 30px 5px;
-      }
-    }
-  </style>
+.toast-close:hover {
+	opacity: 1;
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes slideOut {
+	from {
+		transform: translateX(0);
+		opacity: 1;
+	}
+	to {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+}
+
+.footer {
+	background: linear-gradient(to right, var(--text-color), #1a2634);
+	color: white;
+	text-align: center;
+	padding: 2.5rem;
+	margin-top: auto;  /* Changed from margin-top: 4rem */
+}
+
+.footer p {
+	opacity: 0.9;
+	font-size: 0.9rem;
+	letter-spacing: 0.5px;
+}
+
+@keyframes slideDown {from { transform:translateY(-50px);
+	opacity: 0;
+}
+
+to {
+	transform: translateY(0);
+	opacity: 1;
+}
+
+}
+@keyframes fadeIn {from { opacity:0;
+	
+}
+
+to {
+	opacity: 1;
+}
+
+}
+@keyframes slideIn {to { opacity:1;
+	transform: translateX(0);
+}
+
+}
+.btn-group {
+	display: flex;
+	gap: 1.5rem;
+	justify-content: center;
+	margin-top: 2.5rem;
+}
+
+.btn {
+	padding: 14px 35px;
+	border: none;
+	border-radius: 30px;
+	font-size: 1.1rem;
+	cursor: pointer;
+	transition: all 0.3s;
+	font-weight: 500;
+	text-decoration: none;
+	letter-spacing: 0.5px;
+}
+
+.btn-primary {
+	background: var(--primary-color);
+	color: white;
+}
+
+.btn-secondary {
+	background: var(--secondary-color);
+	color: white;
+}
+
+.btn:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Improvements */
+@media ( max-width : 768px) {
+	.hero h1 {
+		font-size: 2.5rem;
+	}
+	.hero p {
+		font-size: 1rem;
+	}
+	.features {
+		gap: 1.5rem;
+	}
+	.nav-btn {
+		padding: 0.6rem 1.2rem;
+	}
+}
+</style>
 </head>
-
 <body>
-  <nav class="navbar">
-    <a href="/" class="logo">
-      <span class="logo-icon"><i class="fas fa-graduation-cap"></i></span>
-      <span class="logo-text">Shiksha-Setu</span>
-    </a>
-    <div class="nav-links">
-      <a href="/login" class="nav-btn nav-login">Login</a>
-      <a href="/register" class="nav-btn nav-register">Register</a>
-    </div>
-  </nav>
+	<nav class="navbar">
+		<a href="/" class="logo">Shiksha-Setu</a>
+		<div class="nav-links">
+			<a href="/login" class="nav-btn nav-login">Login</a> <a
+				href="/register" class="nav-btn nav-register">Register</a>
+		</div>
+	</nav>
 
-  <section class="hero">
-    <h1>Welcome to Shiksha-Setu</h1>
-    <p>Empowering minds through quality education</p>
-  </section>
+	<section class="hero">
+		<h1>Welcome to Shiksha-Setu</h1>
+		<p>Building Bridges To Brighter Learning</p>
+	</section>
 
-  <section class="features">
-    <div class="feature-card">
-      <i class="fas fa-graduation-cap feature-icon"></i>
-      <h3>Expert Teachers</h3>
-      <p>Learn from industry professionals with years of experience.</p>
-    </div>
-    <div class="feature-card">
-      <i class="fas fa-laptop-code feature-icon"></i>
-      <h3>Online Learning</h3>
-      <p>Access course content anytime, anywhere at your convenience.</p>
-    </div>
-    <div class="feature-card">
-      <i class="fas fa-certificate feature-icon"></i>
-      <h3>Certified Courses</h3>
-      <p>Earn certificates to showcase your achievements and skills.</p>
-    </div>
-  </section>
+	<section class="features">
+		<div class="feature-card">
+			<i class="fas fa-graduation-cap feature-icon"></i>
+			<h3>Expert Teachers</h3>
+			<p>Learn from industry professionals with years of experience.</p>
+		</div>
+		<div class="feature-card">
+			<i class="fas fa-laptop-code feature-icon"></i>
+			<h3>Online Learning</h3>
+			<p>Access course content anytime, anywhere at your convenience.</p>
+		</div>
+		<div class="feature-card">
+			<i class="fas fa-certificate feature-icon"></i>
+			<h3>Certification</h3>
+			<p>Earn certified credentials upon course completion.</p>
+		</div>
+	</section>
 
-  <div class="toast-container">
-    <div id="successToast" class="toast success" th:if="${session.pass}">
-    </div>
-  </div>
+	<div class="toast-container">
+		<div id="successToast" class="toast success" th:if="${session.pass}">
+			<span th:text="${session.pass}"></span>
+			<button class="toast-close">&times;</button>
+		</div>
+		<div id="errorToast" class="toast error" th:if="${session.fail}">
+			<span th:text="${session.fail}"></span>
+			<button class="toast-close">&times;</button>
+		</div>
+        <th:block th:text="${@generalService.removeMessage()}"></th:block>
+	</div>
+
+	<footer class="footer">
+		<p>&copy; 2025 Shiksha-Setu. All rights reserved.</p>
+	</footer>
+
+	<script>
+function showToast() {
+    const toasts = document.querySelectorAll('.toast');
+    
+    toasts.forEach(toast => {
+        if (toast && toast.textContent.trim() !== '') {
+            // Show toast
+            toast.style.display = 'flex';
+            
+            // Add click event for close button
+            const closeBtn = toast.querySelector('.toast-close');
+            closeBtn.addEventListener('click', () => {
+                toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            });
+            
+            // Auto hide toast after 3 seconds
+            setTimeout(() => {
+                if (toast.isConnected) { // Check if toast still exists
+                    toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                    setTimeout(() => {
+                        if (toast.isConnected) {
+                            toast.remove();
+                        }
+                    }, 300);
+                }
+            }, 3000);
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', showToast);
+</script>
 </body>
 </html>
